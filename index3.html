@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramaiah Aerospace Engineering - Official Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Custom styles to enhance Tailwind for the desired aesthetic */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            /* Deep blue to dark gray gradient */
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Playfair Display', serif;
+            color: #fcd34d;
+            /* Gold accent for headings */
+        }
+
+        /* General container styling */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Navbar specific styling */
+        .nav-link:hover {
+            color: #fcd34d;
+            /* Gold on hover */
+            transform: translateY(-2px);
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown-menu {
+            display: none;
+            /* Hidden by default */
+            position: absolute;
+            background-color: #1a202c;
+            /* Darker background for dropdown */
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            /* Ensure it's above other content */
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid #334155;
+            /* Subtle border */
+            transform-origin: top;
+            animation: fadeInScale 0.3s ease-out forwards;
+            /* Animation for appearance */
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            /* Show on hover */
+        }
+
+        .dropdown-item {
+            color: #cbd5e1;
+            padding: 0.75rem 1rem;
+            display: block;
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #2d3748;
+            /* Lighter background on hover */
+            color: #fcd34d;
+            /* Gold text on hover */
+        }
+
+        /* Nested dropdown styling */
+        .nested-dropdown-menu {
+            left: 100%;
+            /* Position to the right of parent */
+            top: 0;
+            /* Align with parent top */
+            margin-left: 0.5rem;
+            /* Small gap */
+        }
+
+        /* Animation for dropdown appearance */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scaleY(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+
+        /* Section content styling */
+        .content-section {
+            display: none;
+            /* Hidden by default, managed by JS */
+            background-color: #1e293b;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease-out forwards;
+            min-height: 60vh;
+            /* Ensure sections have some height */
+        }
+
+        .content-section.active {
+            display: block;
+            /* Show active section */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Button styling */
+        .btn-primary {
+            @apply bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105;
+        }
+
+        .btn-secondary {
+            @apply bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105;
+        }
+
+        /* Form styling */
+        .form-input {
+            @apply w-full p-3 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white;
+        }
+
+        .form-label {
+            @apply block text-gray-300 text-sm font-bold mb-2;
+        }
+
+        /* Chat UI specific styles */
+        #chatSection {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            width: 350px;
+            height: 500px;
+            background-color: #1a202c;
+            border-top-left-radius: 1rem;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            /* Hidden by default */
+            flex-direction: column;
+            /* Use flexbox for chat layout */
+            overflow: hidden;
+        }
+
+        #chatHeader {
+            @apply bg-blue-800 text-white p-4 rounded-tl-lg flex justify-between items-center;
+        }
+
+        #chatMessages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #2d3748;
+            /* Lighter background for messages */
+            scrollbar-width: thin;
+            scrollbar-color: #4a5568 #2d3748;
+        }
+
+        #chatMessages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chatMessages::-webkit-scrollbar-track {
+            background: #2d3748;
+        }
+
+        #chatMessages::-webkit-scrollbar-thumb {
+            background-color: #4a5568;
+            border-radius: 4px;
+        }
+
+        .message-bubble {
+            @apply p-3 mb-2 rounded-lg max-w-xs;
+            word-wrap: break-word;
+        }
+
+        .message-bubble.sent {
+            @apply bg-blue-600 text-white self-end ml-auto;
+        }
+
+        .message-bubble.received {
+            @apply bg-gray-600 text-white self-start mr-auto;
+        }
+
+        #chatInputContainer {
+            @apply p-4 bg-gray-800 border-t border-gray-700 flex;
+        }
+
+        /* Simulator canvas placeholder styles */
+        .simulator-canvas-placeholder {
+            background-color: #0d0d0d;
+            border: 2px solid #fcd34d;
+            border-radius: 0.75rem;
+            width: 100%;
+            height: 400px;
+            /* Fixed height for simulator view */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fcd34d;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #1a202c;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: #fcd34d;
+        }
+
+        /* Date Picker Custom Styles */
+        .datepicker-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .datepicker {
+            position: absolute;
+            background-color: #1a202c;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            display: none;
+            padding: 1rem;
+        }
+
+        .datepicker.active {
+            display: block;
+        }
+
+        .datepicker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .datepicker-header button {
+            background: none;
+            border: none;
+            color: #fcd34d;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .datepicker-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.25rem;
+        }
+
+        .datepicker-day {
+            text-align: center;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .datepicker-day:hover {
+            background-color: #2d3748;
+        }
+
+        .datepicker-day.selected {
+            background-color: #fcd34d;
+            color: #1a202c;
+            font-weight: bold;
+        }
+
+        .datepicker-day.disabled {
+            color: #64748b;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <header class="bg-gray-900 text-white shadow-lg py-4">
+        <div class="container flex flex-col md:flex-row justify-between items-center">
+            <div class="text-center md:text-left mb-4 md:mb-0">
+                <h1 class="text-3xl font-bold text-yellow-400">Ramaiah Institute of Technology</h1>
+                <p class="text-xl text-blue-300">Department of Aerospace Engineering</p>
+                <p class="text-md text-gray-400">Ramaiah Aerospace and Research Forum</p>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="nav-link text-lg flex items-center" data-target="home-section"><i
+                                class="fas fa-home mr-2"></i>Home</a></li>
+                    <li class="relative dropdown">
+                        <a href="#" class="nav-link text-lg flex items-center"><i
+                                class="fas fa-book-open mr-2"></i>Notes & Resources<i
+                                class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item" data-target="notes-upload-section">Upload Notes</a>
+                            </li>
+                            <li><a href="#" class="dropdown-item" data-target="notes-download-section">Download
+                                    Notes</a></li>
+                            <li><a href="#" class="dropdown-item"
+                                    data-target="course-categorization-section">Course-wise Categorization</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="project-reports-section">Project Reports
+                                    Access</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="syllabus-curriculum-section">Syllabus &
+                                    Curriculum</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="research-journals-section">Research
+                                    Journals</a></li>
+                            <li class="relative dropdown">
+                                <a href="#" class="dropdown-item flex justify-between items-center"
+                                    data-target="library-section">Library <i
+                                        class="fas fa-chevron-right ml-2 text-sm"></i></a>
+                                <ul class="dropdown-menu nested-dropdown-menu" id="library-dropdown-menu">
+                                    <li><a href="#" class="dropdown-item" data-filter="all">All</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="propulsion">Propulsion</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="aerodynamics">Aerodynamics</a>
+                                    </li>
+                                    <li><a href="#" class="dropdown-item" data-filter="structures">Structures</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="avionics">Avionics and
+                                            Controls</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="systems">Systems</a></li>
+                                    <li><a href="#" class="dropdown-item"
+                                            data-filter="instrumentation">Instrumentation</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="guidance">Guidance Navigation and
+                                            Control</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="journals">Journals</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="books">Books</a></li>
+                                    <li><a href="#" class="dropdown-item" data-filter="notes">Notes</a></li>
+                                    <li class="p-2 text-xs text-gray-500">Keywords: Aerospace, Aeronautical, Mechanical,
+                                        Avionics, Computer Science, Robotics, Thermodynamics, Fluid Dynamics, Materials,
+                                        Structures, Manufacturing, Design, Aerostructures, Flight Mechanics,
+                                        Astrodynamics, Satellite, Rocketry, UAVs, AI, ML, Data Science, Quantum,
+                                        Cybernetics, Embedded Systems, Control Theory, Navigation, Sensors, Actuators,
+                                        Algorithms, Simulation, CFD, FEM, CAD, CAM, Aerothermal, Hypersonics, Propulsion
+                                        Systems, Jet Engines, Turbines, Combustion, Solid Mechanics, Fracture Mechanics,
+                                        Fatigue, Composite Materials, Smart Structures, EMI, EMC, Signal Processing,
+                                        Communication, GNSS, INS, Autonomy, Drone, Spacecraft, Launch Vehicles, Reentry,
+                                        Orbital Mechanics, Mission Design, Space Systems, Reliability, Maintainability,
+                                        Human Factors, Safety, Regulation, Certification, Airworthiness, Aviation Law,
+                                        Project Management, Systems Engineering.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown">
+                        <a href="#" class="nav-link text-lg flex items-center"><i class="fas fa-users-cog mr-2"></i>User
+                            Sections<i class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item" data-target="student-dashboard">Student Panel</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="faculty-dashboard">Faculty Panel</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="researcher-dashboard">Researcher
+                                    Panel</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="guest-panel">Guest Panel</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown">
+                        <a href="#" class="nav-link text-lg flex items-center"><i
+                                class="fas fa-rocket mr-2"></i>Simulators<i
+                                class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item" data-target="water-rocket-simulator">Water Rocket
+                                    Simulator</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="reentry-vehicle-simulator">Reentry
+                                    Vehicle Simulator</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="launch-vehicle-simulator">Launch Vehicle
+                                    Simulator</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="aircraft-flight-simulator">Aircraft
+                                    Flight Simulator</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="spacecraft-mission-simulator">Spacecraft
+                                    Mission Simulator</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="drone-flight-simulator">Drone Flight
+                                    Simulator</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown">
+                        <a href="#" class="nav-link text-lg flex items-center"><i
+                                class="fas fa-lightbulb mr-2"></i>Clubs<i
+                                class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item" data-target="aeromodelling-club">Aeromodelling
+                                    Club</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="uav-club">UAV Club</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="propulsion-club">Propulsion Club</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown">
+                        <a href="#" class="nav-link text-lg flex items-center"><i
+                                class="fas fa-building mr-2"></i>Groups<i
+                                class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item" data-target="aerodynamics-research-group">Aerodynamics
+                                    Research Group</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="avionics-flight-control-group">Avionics &
+                                    Flight Control Systems Group</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="aircraft-maintenance-group">Aircraft
+                                    Maintenance & Reliability Group</a></li>
+                            <li><a href="#" class="dropdown-item"
+                                    data-target="aircraft-accident-investigation-group">Aircraft Accident Investigation
+                                    Group</a></li>
+                            <li class="relative dropdown">
+                                <a href="#" class="dropdown-item flex justify-between items-center"
+                                    data-target="advanced-computing-group">Advanced Computing Group <i
+                                        class="fas fa-chevron-right ml-2 text-sm"></i></a>
+                                <ul class="dropdown-menu nested-dropdown-menu">
+                                    <li><a href="#" class="dropdown-item" data-target="quantum-computing-group">Quantum
+                                            Computing Group</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown">
+                        <a href="#" class="nav-link text-lg flex items-center"><i class="fas fa-cogs mr-2"></i>RARF<i
+                                class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item" data-target="rarf-about">About Us</a></li>
+                            <li><a href="#" class="dropdown-item" data-target="rarf-vision-mission">Vision & Mission</a>
+                            </li>
+                            <li><a href="#" class="dropdown-item" id="open-member-login-modal">Member Login</a></li>
+                            <li><a href="#" class="dropdown-item" id="open-member-registration-modal">Member
+                                    Registration</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-gray-800 py-4 hidden">
+            <ul class="flex flex-col items-center space-y-4">
+                <li><a href="#" class="nav-link text-lg flex items-center" data-target="home-section"><i
+                            class="fas fa-home mr-2"></i>Home</a></li>
+                <li class="relative dropdown w-full text-center">
+                    <a href="#" class="nav-link text-lg flex items-center justify-center"><i
+                            class="fas fa-book-open mr-2"></i>Notes & Resources<i
+                            class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                    <ul class="dropdown-menu w-full left-0">
+                        <li><a href="#" class="dropdown-item" data-target="notes-upload-section">Upload Notes</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="notes-download-section">Download Notes</a>
+                        </li>
+                        <li><a href="#" class="dropdown-item" data-target="course-categorization-section">Course-wise
+                                Categorization</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="project-reports-section">Project Reports
+                                Access</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="syllabus-curriculum-section">Syllabus &
+                                Curriculum</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="research-journals-section">Research
+                                Journals</a></li>
+                        <li class="relative dropdown">
+                            <a href="#" class="dropdown-item flex justify-between items-center"
+                                data-target="library-section">Library <i
+                                    class="fas fa-chevron-right ml-2 text-sm"></i></a>
+                            <ul class="dropdown-menu nested-dropdown-menu w-full left-full">
+                                <li><a href="#" class="dropdown-item" data-filter="all">All</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="propulsion">Propulsion</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="aerodynamics">Aerodynamics</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="structures">Structures</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="avionics">Avionics and Controls</a>
+                                </li>
+                                <li><a href="#" class="dropdown-item" data-filter="systems">Systems</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="instrumentation">Instrumentation</a>
+                                </li>
+                                <li><a href="#" class="dropdown-item" data-filter="guidance">Guidance Navigation and
+                                        Control</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="journals">Journals</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="books">Books</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="notes">Notes</a></li>
+                                <li class="p-2 text-xs text-gray-500">Keywords: Aerospace, Aeronautical, Mechanical,
+                                    Avionics, Computer Science, Robotics, Thermodynamics, Fluid Dynamics, Materials,
+                                    Structures, Manufacturing, Design, Aerostructures, Flight Mechanics, Astrodynamics,
+                                    Satellite, Rocketry, UAVs, AI, ML, Data Science, Quantum, Cybernetics, Embedded
+                                    Systems, Control Theory, Navigation, Sensors, Actuators, Algorithms, Simulation,
+                                    CFD, FEM, CAD, CAM, Aerothermal, Hypersonics, Propulsion Systems, Jet Engines,
+                                    Turbines, Combustion, Solid Mechanics, Fracture Mechanics, Fatigue, Composite
+                                    Materials, Smart Structures, EMI, EMC, Signal Processing, Communication, GNSS, INS,
+                                    Autonomy, Drone, Spacecraft, Launch Vehicles, Reentry, Orbital Mechanics, Mission
+                                    Design, Space Systems, Reliability, Maintainability, Human Factors, Safety,
+                                    Regulation, Certification, Airworthiness, Aviation Law, Project Management, Systems
+                                    Engineering.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="relative dropdown w-full text-center">
+                    <a href="#" class="nav-link text-lg flex items-center justify-center"><i
+                            class="fas fa-users-cog mr-2"></i>User Sections<i
+                            class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                    <ul class="dropdown-menu w-full left-0">
+                        <li><a href="#" class="dropdown-item" data-target="student-dashboard">Student Panel</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="faculty-dashboard">Faculty Panel</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="researcher-dashboard">Researcher Panel</a>
+                        </li>
+                        <li><a href="#" class="dropdown-item" data-target="guest-panel">Guest Panel</a></li>
+                    </ul>
+                </li>
+                <li class="relative dropdown w-full text-center">
+                    <a href="#" class="nav-link text-lg flex items-center justify-center"><i
+                            class="fas fa-rocket mr-2"></i>Simulators<i
+                            class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                    <ul class="dropdown-menu w-full left-0">
+                        <li><a href="#" class="dropdown-item" data-target="water-rocket-simulator">Water Rocket
+                                Simulator</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="reentry-vehicle-simulator">Reentry Vehicle
+                                Simulator</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="launch-vehicle-simulator">Launch Vehicle
+                                Simulator</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="aircraft-flight-simulator">Aircraft Flight
+                                Simulator</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="spacecraft-mission-simulator">Spacecraft
+                                Mission Simulator</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="drone-flight-simulator">Drone Flight
+                                Simulator</a></li>
+                    </ul>
+                </li>
+                <li class="relative dropdown w-full text-center">
+                    <a href="#" class="nav-link text-lg flex items-center justify-center"><i
+                            class="fas fa-lightbulb mr-2"></i>Clubs<i class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                    <ul class="dropdown-menu w-full left-0">
+                        <li><a href="#" class="dropdown-item" data-target="aeromodelling-club">Aeromodelling Club</a>
+                        </li>
+                        <li><a href="#" class="dropdown-item" data-target="uav-club">UAV Club</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="propulsion-club">Propulsion Club</a></li>
+                    </ul>
+                </li>
+                <li class="relative dropdown w-full text-center">
+                    <a href="#" class="nav-link text-lg flex items-center justify-center"><i
+                            class="fas fa-building mr-2"></i>Groups<i class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                    <ul class="dropdown-menu w-full left-0">
+                        <li><a href="#" class="dropdown-item" data-target="aerodynamics-research-group">Aerodynamics
+                                Research Group</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="avionics-flight-control-group">Avionics &
+                                Flight Control Systems Group</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="aircraft-maintenance-group">Aircraft
+                                Maintenance & Reliability Group</a></li>
+                        <li><a href="#" class="dropdown-item"
+                                data-target="aircraft-accident-investigation-group">Aircraft Accident Investigation
+                                Group</a></li>
+                        <li class="relative dropdown">
+                            <a href="#" class="dropdown-item flex justify-between items-center"
+                                data-target="advanced-computing-group">Advanced Computing Group <i
+                                    class="fas fa-chevron-right ml-2 text-sm"></i></a>
+                            <ul class="dropdown-menu nested-dropdown-menu w-full left-full">
+                                <li><a href="#" class="dropdown-item" data-target="quantum-computing-group">Quantum
+                                        Computing Group</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="relative dropdown w-full text-center">
+                    <a href="#" class="nav-link text-lg flex items-center justify-center"><i
+                            class="fas fa-cogs mr-2"></i>RARF<i class="fas fa-chevron-down ml-2 text-sm"></i></a>
+                    <ul class="dropdown-menu w-full left-0">
+                        <li><a href="#" class="dropdown-item" data-target="rarf-about">About Us</a></li>
+                        <li><a href="#" class="dropdown-item" data-target="rarf-vision-mission">Vision & Mission</a>
+                        </li>
+                        <li><a href="#" class="dropdown-item" id="open-member-login-mobile">Member Login</a></li>
+                        <li><a href="#" class="dropdown-item" id="open-member-registration-mobile">Member
+                                Registration</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container py-8">
+        <section id="home-section" class="content-section active">
+            <h2 class="text-4xl font-bold text-center mb-8 animate-pulse">Welcome to Ramaiah Aerospace Engineering!</h2>
+            <p class="text-lg text-center mb-12">Pioneering the future of aerospace innovation and research.</p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-b-4 border-yellow-500">
+                    <h3 class="text-2xl text-yellow-300 font-bold mb-3 flex items-center"><i
+                            class="fas fa-info-circle mr-2"></i>About Us</h3>
+                    <p class="text-gray-400 mb-4">The Department of Aerospace Engineering at Ramaiah Institute of
+                        Technology is dedicated to fostering excellence in education, research, and innovation in the
+                        dynamic field of aerospace. We are committed to shaping future leaders and engineers who will
+                        contribute significantly to the global aerospace industry.</p>
+                    <button class="btn-secondary text-sm" data-target-section="about-us-detailed">Learn More</button>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-b-4 border-blue-500">
+                    <h3 class="text-2xl text-yellow-300 font-bold mb-3 flex items-center"><i
+                            class="fas fa-history mr-2"></i>Our Legacy</h3>
+                    <p class="text-gray-400 mb-4">With a rich history of academic rigor and groundbreaking
+                        contributions, our department has consistently produced top-tier professionals and researchers.
+                        We pride ourselves on a legacy of innovation that propels us forward in aerospace advancements.
+                    </p>
+                    <button class="btn-secondary text-sm" data-target-section="legacy-detailed">Learn More</button>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-b-4 border-emerald-500">
+                    <h3 class="text-2xl text-yellow-300 font-bold mb-3 flex items-center"><i
+                            class="fas fa-bullseye mr-2"></i>Vision & Mission</h3>
+                    <p class="text-gray-400 mb-4">Our vision is to be a globally recognized center of excellence in
+                        aerospace education and research. Our mission is to provide quality education, foster research,
+                        and promote innovation to meet the challenges of the aerospace industry and society.</p>
+                    <button class="btn-secondary text-sm" data-target-section="vision-mission-detailed">Learn
+                        More</button>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-b-4 border-purple-500">
+                    <h3 class="text-2xl text-yellow-300 font-bold mb-3 flex items-center"><i
+                            class="fas fa-flask mr-2"></i>Advanced Facilities</h3>
+                    <p class="text-gray-400 mb-4">Equipped with state-of-the-art laboratories and cutting-edge
+                        technology, our department offers an unparalleled learning environment. From wind tunnels to
+                        advanced simulation labs, students have access to the best resources.</p>
+                    <button class="btn-secondary text-sm" data-target-section="facilities-detailed">Learn More</button>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-b-4 border-red-500">
+                    <h3 class="text-2xl text-yellow-300 font-bold mb-3 flex items-center"><i
+                            class="fas fa-trophy mr-2"></i>Our Achievements</h3>
+                    <p class="text-gray-400 mb-4">Our students and faculty consistently achieve recognition in national
+                        and international competitions, research publications, and industry collaborations. We celebrate
+                        a culture of continuous achievement and innovation.</p>
+                    <button class="btn-secondary text-sm" data-target-section="achievements-detailed">Learn
+                        More</button>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-b-4 border-indigo-500">
+                    <h3 class="text-2xl text-yellow-300 font-bold mb-3 flex items-center"><i
+                            class="fas fa-microscope mr-2"></i>Research Focus</h3>
+                    <p class="text-gray-400 mb-4">Our research spans across various domains including aerodynamics,
+                        propulsion, aircraft structures, avionics, and space technology, contributing to advancements in
+                        both theoretical and applied aerospace sciences.</p>
+                    <button class="btn-secondary text-sm" data-target-section="research-areas-detailed">Learn
+                        More</button>
+                </div>
+            </div>
+
+            <div id="explore-program-section" class="content-section active mt-12">
+                <h2 class="text-3xl font-bold text-yellow-300 mb-6">Explore Our Programs</h2>
+                <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                    <h3 class="text-2xl text-yellow-300 font-bold mb-4">Department of Aerospace Engineering, M. S.
+                        Ramaiah Institute of Technology</h3>
+                    <p class="text-gray-300 mb-4">The Department of Aerospace Engineering at MSRIT was established in
+                        the year 2013. It offers undergraduate (B.E.) and postgraduate (M.Tech) programs in Aerospace
+                        Engineering. The department focuses on providing a strong foundation in aerospace fundamentals,
+                        coupled with practical exposure to cutting-edge technologies.</p>
+                    <h4 class="text-xl text-blue-300 font-semibold mb-3">Undergraduate Program (B.E. in Aerospace
+                        Engineering)</h4>
+                    <p class="text-gray-300 mb-2">The B.E. program is designed to equip students with comprehensive
+                        knowledge in areas such as aerodynamics, aircraft structures, propulsion, flight mechanics, and
+                        avionics. The curriculum integrates theoretical concepts with hands-on laboratory experience and
+                        project-based learning. Students gain expertise in aircraft design, manufacturing, maintenance,
+                        and operation.</p>
+                    <h4 class="text-xl text-blue-300 font-semibold mb-3">Postgraduate Program (M.Tech in Aerospace
+                        Engineering)</h4>
+                    <p class="text-gray-300 mb-4">The M.Tech program offers advanced specialization in various
+                        sub-fields of aerospace engineering. It emphasizes research and development, preparing students
+                        for careers in academia, R&D organizations, and advanced industry roles. Focus areas include
+                        advanced propulsion systems, computational fluid dynamics, composite materials, and guidance &
+                        control systems.</p>
+                    <h4 class="text-xl text-blue-300 font-semibold mb-3">Key Features:</h4>
+                    <ul class="list-disc list-inside text-gray-300 mb-4">
+                        <li>Well-equipped laboratories including Aerodynamics Lab, Structures Lab, Propulsion Lab,
+                            Aircraft Systems Lab, and Avionics Lab.</li>
+                        <li>Experienced and highly qualified faculty with expertise in diverse aerospace domains.</li>
+                        <li>Industry collaborations and guest lectures by leading aerospace professionals.</li>
+                        <li>Opportunities for internships and real-world projects.</li>
+                        <li>Focus on research and innovation, encouraging students to participate in national and
+                            international conferences.</li>
+                        <li>Strong alumni network in prominent aerospace organizations like ISRO, HAL, DRDO, Boeing,
+                            Airbus, and various airlines.</li>
+                    </ul>
+                    <p class="text-gray-300 italic text-right">Content adapted from M.S. Ramaiah Institute of
+                        Technology, Department of Aerospace Engineering official website.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rarf-about" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">About Ramaiah Aerospace and Research Forum (RARF)</h2>
+            <p class="text-gray-300 mb-4">The Ramaiah Aerospace and Research Forum (RARF) is a student-led initiative
+                under the aegis of the Department of Aerospace Engineering. RARF serves as a vibrant platform for
+                students to delve deeper into the fascinating world of aerospace, beyond the conventional classroom
+                curriculum. We aim to foster a culture of innovation, collaboration, and hands-on learning.</p>
+            <p class="text-gray-300 mb-4">Our forum brings together enthusiastic students with a passion for flight,
+                space, and everything in between. We organize workshops, technical talks, design challenges, and
+                practical projects to enhance members' theoretical understanding and practical skills. RARF is where
+                ideas take flight, theories become reality, and future aerospace pioneers are nurtured.</p>
+            <h3 class="text-2xl text-blue-300 font-semibold mb-3">What We Do:</h3>
+            <ul class="list-disc list-inside text-gray-300 mb-4">
+                <li>Conduct regular technical sessions and seminars by faculty and industry experts.</li>
+                <li>Organize hands-on workshops on topics like drone building, rocketry, CAD, and simulation software.
+                </li>
+                <li>Facilitate participation in national and international aerospace competitions.</li>
+                <li>Promote research and development activities among students.</li>
+                <li>Provide a collaborative environment for peer learning and project execution.</li>
+                <li>Network with alumni and professionals in the aerospace sector.</li>
+            </ul>
+        </section>
+
+        <section id="rarf-vision-mission" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">RARF Vision & Mission</h2>
+            <div class="mb-6">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Vision</h3>
+                <p class="text-gray-300">To be a leading student aerospace forum, recognized for fostering innovation,
+                    research, and a passion for aerospace, thereby contributing to the development of competent and
+                    creative aerospace professionals.</p>
+            </div>
+            <div>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Mission</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>To provide a dynamic platform for students to explore, learn, and apply aerospace engineering
+                        principles through practical projects and activities.</li>
+                    <li>To organize workshops, seminars, and guest lectures to enhance technical knowledge and soft
+                        skills of members.</li>
+                    <li>To encourage participation in national and international aerospace challenges and competitions.
+                    </li>
+                    <li>To promote interdisciplinary collaboration and foster a strong network among students, faculty,
+                        and industry experts.</li>
+                    <li>To inspire the next generation of aerospace engineers and researchers to achieve excellence and
+                        drive innovation.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="member-dashboard" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Welcome, <span id="dashboardMemberName">Member</span>!
+                Your RARF Dashboard</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
+                <h3 class="text-2xl text-blue-300 font-bold mb-4">Your Details</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
+                    <div><strong>Member User ID:</strong> <span id="memberUserId">RARF-MOCK-001</span></div>
+                    <div><strong>Name:</strong> <span id="memberDashboardName">Mock Member</span></div>
+                    <div><strong>USN:</strong> <span id="memberDashboardUsn">1MSXXAE001</span></div>
+                    <div><strong>Mobile Number:</strong> <span id="memberDashboardMobile">+91 98765 43210</span></div>
+                    <div><strong>Position in Club:</strong> <span id="memberDashboardPosition">Group Wing Head
+                            (Aeromodelling)</span></div>
+                    <div class="md:col-span-2 text-sm text-gray-500 mt-2">
+                        <p><i>Inspired by organizational structures of ISRO, NASA, HAL, DRDO, focusing on leadership and
+                                team roles.</i></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
+                <h3 class="text-2xl text-blue-300 font-bold mb-4">Attendance Overview</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-300">
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Overall Attendance</h4>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-500 rounded-full h-4">
+                                <div class="bg-emerald-500 h-4 rounded-full" style="width: 85%;"></div>
+                            </div>
+                            <span class="ml-3 font-bold">85%</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Consistency in all RARF activities.</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Group Meetings</h4>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-500 rounded-full h-4">
+                                <div class="bg-blue-500 h-4 rounded-full" style="width: 92%;"></div>
+                            </div>
+                            <span class="ml-3 font-bold">92%</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Participation in your specific group's discussions.</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Group Activities</h4>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-500 rounded-full h-4">
+                                <div class="bg-purple-500 h-4 rounded-full" style="width: 88%;"></div>
+                            </div>
+                            <span class="ml-3 font-bold">88%</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Involvement in practical projects and tasks.</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Parent Club (Aeromodelling)</h4>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-500 rounded-full h-4">
+                                <div class="bg-orange-500 h-4 rounded-full" style="width: 80%;"></div>
+                            </div>
+                            <span class="ml-3 font-bold">80%</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Engagement with main club events.</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Club Meetings</h4>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-500 rounded-full h-4">
+                                <div class="bg-red-500 h-4 rounded-full" style="width: 90%;"></div>
+                            </div>
+                            <span class="ml-3 font-bold">90%</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Attendance at general RARF meetings.</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Seminars & Conferences</h4>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-500 rounded-full h-4">
+                                <div class="bg-teal-500 h-4 rounded-full" style="width: 75%;"></div>
+                            </div>
+                            <span class="ml-3 font-bold">75%</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Participation in knowledge-sharing sessions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
+                <h3 class="text-2xl text-blue-300 font-bold mb-4">Performance & History</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-300">
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Efficiency Rating</h4>
+                        <div class="flex items-center">
+                            <span class="text-4xl font-bold text-yellow-400 mr-3">A+</span>
+                            <p class="text-sm text-gray-400">Consistently exceeds expectations in task completion and
+                                quality.</p>
+                        </div>
+                        <div class="w-full bg-gray-500 rounded-full h-2 mt-2">
+                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Project Contributions</h4>
+                        <ul class="list-disc list-inside text-gray-300">
+                            <li>Led the 'Aerobot Design Challenge' (Spring 2024)</li>
+                            <li>Key contributor to 'Hybrid Propulsion System Research' (Autumn 2023)</li>
+                            <li>Mentored junior members for 'Drone Racing League' (Summer 2023)</li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-2 bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Awards & Recognition</h4>
+                        <ul class="list-disc list-inside text-gray-300">
+                            <li>"RARF Innovator of the Year" - 2024</li>
+                            <li>"Best Presenter" - Aerospace Seminar Series, March 2024</li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-2 bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">Complete Activity Log</h4>
+                        <div class="h-48 overflow-y-auto border border-gray-600 rounded p-2 text-sm text-gray-400">
+                            <p>[2025-06-20] Participated in Advanced CFD Workshop.</p>
+                            <p>[2025-05-15] Submitted final report for Aerobot Design Challenge.</p>
+                            <p>[2025-04-10] Attended "Future of Space Exploration" conference.</p>
+                            <p>[2025-03-01] Led bi-weekly group meeting for Aeromodelling.</p>
+                            <p>[2024-11-20] Presented research on "Sustainable Aviation Fuels".</p>
+                            <p>[2024-09-05] Completed UAV pilot training certification.</p>
+                            <p>[2024-07-18] Contributed to drone swarm intelligence project.</p>
+                            <p>[2024-05-22] Mentored new RARF members in basic aerodynamics.</p>
+                            <p>[2024-03-30] Attended "ISRO Space Applications Centre" guest lecture.</p>
+                            <p>[2023-12-01] Joined RARF as a core member.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="notes-upload-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Upload Notes</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <form id="noteUploadForm">
+                    <div class="mb-4">
+                        <label for="noteTitle" class="form-label">Note Title</label>
+                        <input type="text" id="noteTitle" class="form-input"
+                            placeholder="e.g., Aerodynamics Fundamentals" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="noteCourse" class="form-label">Course / Category</label>
+                        <input type="text" id="noteCourse" class="form-input" placeholder="e.g., AE401 - Fluid Dynamics"
+                            required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="noteFile" class="form-label">Upload File (PDF, DOCX, PPTX)</label>
+                        <input type="file" id="noteFile" class="form-input" accept=".pdf,.doc,.docx,.ppt,.pptx"
+                            required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="noteDescription" class="form-label">Description</label>
+                        <textarea id="noteDescription" class="form-input h-32"
+                            placeholder="Brief description of the note content..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Upload Note</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="notes-download-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Download Notes</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <div class="mb-4">
+                    <input type="text" id="searchNotes" class="form-input"
+                        placeholder="Search for notes (e.g., Aerodynamics, Propulsion, AE401...)">
+                </div>
+                <div id="notesList" class="space-y-4">
+                    <div class="bg-gray-700 p-4 rounded-lg flex justify-between items-center note-item">
+                        <div>
+                            <h4 class="text-xl font-semibold text-yellow-300">Fluid Dynamics Basics</h4>
+                            <p class="text-gray-400 text-sm">Course: AE302 | Uploaded by: Dr. Sharma</p>
+                        </div>
+                        <button class="btn-secondary text-sm">Download</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg flex justify-between items-center note-item">
+                        <div>
+                            <h4 class="text-xl font-semibold text-yellow-300">Aircraft Structures - Module 1</h4>
+                            <p class="text-gray-400 text-sm">Course: AE303 | Uploaded by: Prof. Rao</p>
+                        </div>
+                        <button class="btn-secondary text-sm">Download</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg flex justify-between items-center note-item">
+                        <div>
+                            <h4 class="text-xl font-semibold text-yellow-300">Spacecraft Propulsion Systems</h4>
+                            <p class="text-gray-400 text-sm">Course: AE405 | Uploaded by: Dr. Gupta</p>
+                        </div>
+                        <button class="btn-secondary text-sm">Download</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg flex justify-between items-center note-item">
+                        <div>
+                            <h4 class="text-xl font-semibold text-yellow-300">UAV Design Principles</h4>
+                            <p class="text-gray-400 text-sm">Category: UAV Club | Uploaded by: Dharun M</p>
+                        </div>
+                        <button class="btn-secondary text-sm">Download</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="course-categorization-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Course-wise Categorization</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Browse notes categorized by specific courses offered in the Aerospace
+                    Engineering department.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-gray-700 p-4 rounded-lg text-center">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">AE301 - Engineering Mathematics</h4>
+                        <p class="text-gray-400">50+ Notes available</p>
+                        <button class="btn-secondary text-sm mt-3">View Notes</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg text-center">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">AE302 - Fluid Dynamics</h4>
+                        <p class="text-gray-400">70+ Notes available</p>
+                        <button class="btn-secondary text-sm mt-3">View Notes</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg text-center">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">AE303 - Aircraft Structures</h4>
+                        <p class="text-gray-400">65+ Notes available</p>
+                        <button class="btn-secondary text-sm mt-3">View Notes</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg text-center">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">AE401 - Aerodynamics</h4>
+                        <p class="text-gray-400">80+ Notes available</p>
+                        <button class="btn-secondary text-sm mt-3">View Notes</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg text-center">
+                        <h4 class="text-xl font-semibold text-yellow-300 mb-2">AE405 - Space Propulsion</h4>
+                        <p class="text-gray-400">45+ Notes available</p>
+                        <button class="btn-secondary text-sm mt-3">View Notes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="project-reports-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Project Reports Access</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Access a repository of student projects and research reports.</p>
+                <div class="space-y-4">
+                    <div class="bg-gray-700 p-4 rounded-lg flex justify-between items-center">
+                        <div>
+                            <h4 class="text-xl font-semibold text-yellow-300">Design and Analysis of a Composite Wing
+                                Structure</h4>
+                            <p class="text-gray-400 text-sm">By: Team AeroDesign | Year: 2024</p>
+                        </div>
+                        <button class="btn-secondary text-sm">View Report</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg flex justify-between items-center">
+                        <div>
+                            <h4 class="text-xl font-semibold text-yellow-300">Development of an AI-Powered UAV
+                                Navigation System</h4>
+                            <p class="text-gray-400 text-sm">By: Robotics & AI Group | Year: 2023</p>
+                        </div>
+                        <button class="btn-secondary text-sm">View Report</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="syllabus-curriculum-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Syllabus & Curriculum</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Find the latest syllabus and curriculum details for all Aerospace
+                    Engineering programs.</p>
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li><a href="#" class="text-blue-400 hover:underline">B.E. Aerospace Engineering - 2023 Scheme
+                            Syllabus (PDF)</a></li>
+                    <li><a href="#" class="text-blue-400 hover:underline">M.Tech Aerospace Engineering - Advanced
+                            Syllabus (PDF)</a></li>
+                    <li><a href="#" class="text-blue-400 hover:underline">Elective Courses Handbook 2025 (PDF)</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="research-journals-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Research Journals & Publications</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Explore academic journals and publications by our faculty and researchers.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-xl font-semibold text-yellow-300">"Hypersonic Flow Characterization over
+                            Re-entry Vehicles"</h4>
+                        <p class="text-gray-400 text-sm">Authors: Dr. A. Kumar, Prof. S. Devi | Journal: Journal of
+                            Aerospace Sciences | Year: 2024</p>
+                        <a href="#" class="text-blue-400 hover:underline text-sm mt-2 block">Read Article</a>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-xl font-semibold text-yellow-300">"AI-Enhanced Predictive Maintenance for
+                            Aircraft Engines"</h4>
+                        <p class="text-gray-400 text-sm">Authors: Dr. L. Singh, R. Varma | Journal: International
+                            Journal of Aviation Technology | Year: 2023</p>
+                        <a href="#" class="text-blue-400 hover:underline text-sm mt-2 block">Read Article</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="library-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Aerospace Library</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Welcome to the comprehensive digital library for Aerospace Engineering.
+                    Here you can find a vast collection of resources categorized for easy access.</p>
+                <div class="mb-4 flex flex-wrap gap-2">
+                    <button class="btn-secondary text-sm library-filter-btn" data-filter-type="all">All</button>
+                    <button class="btn-secondary text-sm library-filter-btn"
+                        data-filter-type="propulsion">Propulsion</button>
+                    <button class="btn-secondary text-sm library-filter-btn"
+                        data-filter-type="aerodynamics">Aerodynamics</button>
+                    <button class="btn-secondary text-sm library-filter-btn"
+                        data-filter-type="structures">Structures</button>
+                    <button class="btn-secondary text-sm library-filter-btn" data-filter-type="avionics">Avionics and
+                        Controls</button>
+                    <button class="btn-secondary text-sm library-filter-btn" data-filter-type="systems">Systems</button>
+                    <button class="btn-secondary text-sm library-filter-btn"
+                        data-filter-type="instrumentation">Instrumentation</button>
+                    <button class="btn-secondary text-sm library-filter-btn" data-filter-type="guidance">Guidance
+                        Navigation and Control</button>
+                </div>
+
+                <div class="mb-6 flex flex-wrap gap-2">
+                    <button class="btn-primary text-sm library-content-type-btn"
+                        data-content-type="journals">Journals</button>
+                    <button class="btn-primary text-sm library-content-type-btn"
+                        data-content-type="books">Books</button>
+                    <button class="btn-primary text-sm library-content-type-btn"
+                        data-content-type="notes">Notes</button>
+                    <button class="btn-primary text-sm library-content-type-btn"
+                        data-content-type="theses">Theses/Dissertations</button>
+                    <button class="btn-primary text-sm library-content-type-btn" data-content-type="reports">Technical
+                        Reports</button>
+                </div>
+
+                <div id="libraryContent" class="space-y-4">
+                    <div class="bg-gray-700 p-4 rounded-lg library-item propulsion books">
+                        <h4 class="text-xl font-semibold text-yellow-300">Fundamentals of Jet Propulsion</h4>
+                        <p class="text-gray-400 text-sm">Author: S. M. Yahya | Type: Book | Category: Propulsion</p>
+                        <button class="btn-secondary text-sm mt-2">Access</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg library-item aerodynamics notes">
+                        <h4 class="text-xl font-semibold text-yellow-300">Aerodynamic Force and Moment Coefficients</h4>
+                        <p class="text-gray-400 text-sm">Type: Class Note | Category: Aerodynamics</p>
+                        <button class="btn-secondary text-sm mt-2">Access</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg library-item structures journals">
+                        <h4 class="text-xl font-semibold text-yellow-300">Advanced Composite Materials in Aircraft
+                            Structures</h4>
+                        <p class="text-gray-400 text-sm">Journal: Aerospace Structures Journal, Vol 15, Issue 2 |
+                            Category: Structures</p>
+                        <button class="btn-secondary text-sm mt-2">Read Journal</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg library-item avionics books">
+                        <h4 class="text-xl font-semibold text-yellow-300">Aircraft Digital Avionics Systems</h4>
+                        <p class="text-gray-400 text-sm">Author: R.P.G. Collinson | Type: Book | Category: Avionics and
+                            Controls</p>
+                        <button class="btn-secondary text-sm mt-2">Access</button>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg library-item guidance journals">
+                        <h4 class="text-xl font-semibold text-yellow-300">Kalman Filtering for Navigation Systems</h4>
+                        <p class="text-gray-400 text-sm">Journal: IEEE Transactions on Aerospace and Electronic Systems
+                            | Category: Guidance Navigation and Control</p>
+                        <button class="btn-secondary text-sm mt-2">Read Journal</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4">Relevant keywords for library content include: Aerospace,
+                        Aeronautical, Mechanical, Avionics, Computer Science, Robotics, Thermodynamics, Fluid Dynamics,
+                        Materials, Structures, Manufacturing, Design, Aerostructures, Flight Mechanics, Astrodynamics,
+                        Satellite, Rocketry, UAVs, AI, ML, Data Science, Quantum Computing, Cybernetics, Embedded
+                        Systems, Control Theory, Navigation, Sensors, Actuators, Algorithms, Simulation, Computational
+                        Fluid Dynamics (CFD), Finite Element Method (FEM), Computer-Aided Design (CAD), Computer-Aided
+                        Manufacturing (CAM), Aerothermal, Hypersonics, Jet Engines, Turbines, Combustion, Solid
+                        Mechanics, Fracture Mechanics, Fatigue, Composite Materials, Smart Structures, Electromagnetic
+                        Interference (EMI), Electromagnetic Compatibility (EMC), Signal Processing, Communication
+                        Systems, Global Navigation Satellite System (GNSS), Inertial Navigation System (INS), Autonomy,
+                        Drone Technology, Spacecraft Design, Launch Vehicles, Reentry Vehicles, Orbital Mechanics,
+                        Mission Design, Space Systems Engineering, Reliability Engineering, Maintainability, Human
+                        Factors in Aviation, Aviation Safety, Aviation Regulation, Certification Processes,
+                        Airworthiness, Aviation Law, Project Management, Systems Engineering, Aerodynamics of High-Speed
+                        Flight, Atmospheric Flight Mechanics, Space Mission Analysis, Rocket Propulsion, Turbomachinery,
+                        Structural Dynamics, Aeroelasticity, Smart Materials, Nondestructive Testing, Digital Signal
+                        Processing, Wireless Communication, Satellite Communication, Remote Sensing, Image Processing,
+                        Artificial Neural Networks, Deep Learning, Fuzzy Logic, Expert Systems, Parallel Computing,
+                        Distributed Systems, Cloud Computing, Cybersecurity, Data Mining, Optimization, Operations
+                        Research, Ergonomics, Human-Computer Interaction, Quality Control, Supply Chain Management,
+                        Logistics, Financial Management, Marketing, Business Strategy, Innovation Management,
+                        Entrepreneurship, Intellectual Property, Ethics, Sustainability, Environmental Impact
+                        Assessment, Risk Management, Crisis Management, Global Aviation, International Regulations, Air
+                        Traffic Control, Airport Operations, Airline Management, Aerospace Manufacturing, Space Tourism,
+                        Planetary Exploration, Asteroid Mining, Space Colonization, Orbital Debris, Space Law,
+                        International Space Station, Commercial Spaceflight, Unmanned Aerial Systems, Counter-UAS,
+                        Hypersonic Vehicles, Directed Energy Weapons, Stealth Technology, Radar Systems, Electronic
+                        Warfare, Satellite Navigation, Precision Guidance, Autonomous Systems, Swarm Robotics,
+                        Biologically Inspired Robotics, Soft Robotics, Nanotechnology, Micro-Electro-Mechanical Systems
+                        (MEMS), Advanced Manufacturing Processes, Additive Manufacturing (3D Printing), Smart
+                        Manufacturing, Industry 4.0, Digital Twin, Predictive Analytics, Big Data, Blockchain in
+                        Aerospace, Quantum Sensors, Quantum Cryptography, Quantum Communication, Quantum Internet.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="student-dashboard" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Student Dashboard</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Welcome, Student! This is your personalized dashboard. Here you can access
+                    your course materials, academic performance, and club activities.</p>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Academic Progress:</h3>
+                <div class="bg-gray-700 p-4 rounded-lg mb-4">
+                    <p class="text-gray-300">GPA: <strong>3.8/4.0</strong></p>
+                    <p class="text-gray-300">Current Semester Courses: AE401, AE402, AE403</p>
+                </div>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">RARF Activities:</h3>
+                <div class="bg-gray-700 p-4 rounded-lg">
+                    <p class="text-gray-300">Active Club: Aeromodelling Club</p>
+                    <p class="text-gray-300">Next Meeting: July 10, 2025 - UAV Design Review</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faculty-dashboard" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Faculty Dashboard</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Welcome, Faculty! Manage your courses, advise students, and track research
+                    projects from here.</p>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Your Courses:</h3>
+                <ul class="list-disc list-inside text-gray-300 mb-4">
+                    <li>AE401 - Aerodynamics (Course Coordinator)</li>
+                    <li>AE502 - Advanced Propulsion Systems (Lecturer)</li>
+                </ul>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Research Projects:</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>Project X: Hypersonic Glide Vehicle (Lead Researcher)</li>
+                    <li>Project Y: AI for Flight Control (Co-Researcher)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="researcher-dashboard" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Researcher Dashboard</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Welcome, Researcher! Access your ongoing research data, publications, and
+                    collaborations.</p>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Active Research:</h3>
+                <ul class="list-disc list-inside text-gray-300 mb-4">
+                    <li>Quantum Computing for Aerospace Applications</li>
+                    <li>Advanced Materials for Space Structures</li>
+                </ul>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Recent Publications:</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>"Quantum Algorithms for Aerodynamic Optimization" - Journal of Quantum Aerospace</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="guest-panel" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Guest Panel</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-300 mb-4">Welcome, Guest! Here you can find public information about the department,
+                    upcoming events, and general resources.</p>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Upcoming Events:</h3>
+                <ul class="list-disc list-inside text-gray-300 mb-4">
+                    <li>Aerospace Career Fair - August 15, 2025</li>
+                    <li>Open House for Prospective Students - September 5, 2025</li>
+                </ul>
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Public Resources:</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>Department Brochure (PDF)</li>
+                    <li>Research Highlights 2024 (PDF)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="water-rocket-simulator" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Water Rocket Simulator</h2>
+            <div class="simulator-canvas-placeholder">
+                <i class="fas fa-water text-6xl mb-4"></i>
+                <p>Interactive Water Rocket Simulation Interface Coming Soon!</p>
+                <p class="text-sm text-gray-400 mt-2">Adjust water volume, pressure, and fin design to optimize flight.
+                </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mt-6">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Simulation Parameters (Placeholder)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Water Volume (L)</label>
+                        <input type="number" class="form-input" value="1.5" step="0.1">
+                    </div>
+                    <div>
+                        <label class="form-label">Pressure (PSI)</label>
+                        <input type="number" class="form-input" value="80" step="1">
+                    </div>
+                    <div>
+                        <label class="form-label">Fin Angle (degrees)</label>
+                        <input type="number" class="form-input" value="0" step="1">
+                    </div>
+                    <div>
+                        <label class="form-label">Rocket Mass (kg)</label>
+                        <input type="number" class="form-input" value="0.2" step="0.01">
+                    </div>
+                </div>
+                <button class="btn-primary mt-6 w-full">Run Simulation</button>
+            </div>
+        </section>
+
+        <section id="reentry-vehicle-simulator" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Reentry Vehicle Simulator</h2>
+            <div class="simulator-canvas-placeholder">
+                <i class="fas fa-meteor text-6xl mb-4"></i>
+                <p>Reentry Vehicle Simulation Interface Coming Soon!</p>
+                <p class="text-sm text-gray-400 mt-2">Analyze thermal loads, trajectory, and atmospheric braking.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mt-6">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Simulation Parameters (Placeholder)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Reentry Angle (degrees)</label>
+                        <input type="number" class="form-input" value="6.5" step="0.1">
+                    </div>
+                    <div>
+                        <label class="form-label">Initial Altitude (km)</label>
+                        <input type="number" class="form-input" value="120" step="1">
+                    </div>
+                </div>
+                <button class="btn-primary mt-6 w-full">Run Simulation</button>
+            </div>
+        </section>
+
+        <section id="launch-vehicle-simulator" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Launch Vehicle Simulator</h2>
+            <div class="simulator-canvas-placeholder">
+                <i class="fas fa-space-shuttle text-6xl mb-4"></i>
+                <p>Launch Vehicle Simulation Interface Coming Soon!</p>
+                <p class="text-sm text-gray-400 mt-2">Model rocket stages, thrust profiles, and orbital insertion.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mt-6">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Simulation Parameters (Placeholder)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Thrust (kN)</label>
+                        <input type="number" class="form-input" value="1000" step="100">
+                    </div>
+                    <div>
+                        <label class="form-label">Mass Ratio</label>
+                        <input type="number" class="form-input" value="0.9" step="0.01">
+                    </div>
+                </div>
+                <button class="btn-primary mt-6 w-full">Run Simulation</button>
+            </div>
+        </section>
+
+        <section id="aircraft-flight-simulator" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Aircraft Flight Simulator</h2>
+            <div class="simulator-canvas-placeholder">
+                <i class="fas fa-plane text-6xl mb-4"></i>
+                <p>Aircraft Flight Simulation Interface Coming Soon!</p>
+                <p class="text-sm text-gray-400 mt-2">Experience flight dynamics and control system responses.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mt-6">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Simulation Parameters (Placeholder)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Wing Span (m)</label>
+                        <input type="number" class="form-input" value="10" step="0.1">
+                    </div>
+                    <div>
+                        <label class="form-label">Engine Thrust (kN)</label>
+                        <input type="number" class="form-input" value="50" step="1">
+                    </div>
+                </div>
+                <button class="btn-primary mt-6 w-full">Run Simulation</button>
+            </div>
+        </section>
+
+        <section id="spacecraft-mission-simulator" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Spacecraft Mission Simulator</h2>
+            <div class="simulator-canvas-placeholder">
+                <i class="fas fa-globe-americas text-6xl mb-4"></i>
+                <p>Spacecraft Mission Simulation Interface Coming Soon!</p>
+                <p class="text-sm text-gray-400 mt-2">Plan orbital maneuvers, rendezvous, and docking procedures.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mt-6">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Simulation Parameters (Placeholder)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Orbital Altitude (km)</label>
+                        <input type="number" class="form-input" value="400" step="10">
+                    </div>
+                    <div>
+                        <label class="form-label">Delta-V Budget (m/s)</label>
+                        <input type="number" class="form-input" value="3000" step="100">
+                    </div>
+                </div>
+                <button class="btn-primary mt-6 w-full">Run Simulation</button>
+            </div>
+        </section>
+
+        <section id="drone-flight-simulator" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Drone Flight Simulator</h2>
+            <div class="simulator-canvas-placeholder">
+                <i class="fas fa-drone text-6xl mb-4"></i>
+                <p>Drone Flight Simulation Interface Coming Soon!</p>
+                <p class="text-sm text-gray-400 mt-2">Practice drone controls, obstacle avoidance, and mission planning.
+                </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mt-6">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-3">Simulation Parameters (Placeholder)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Payload Capacity (kg)</label>
+                        <input type="number" class="form-input" value="1.5" step="0.1">
+                    </div>
+                    <div>
+                        <label class="form-label">Flight Duration (mins)</label>
+                        <input type="number" class="form-input" value="20" step="1">
+                    </div>
+                </div>
+                <button class="btn-primary mt-6 w-full">Run Simulation</button>
+            </div>
+        </section>
+
+        <section id="video-lectures-section" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Video Lectures & Events Portal</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <h3 class="text-2xl text-blue-300 font-semibold mb-4">Lecture Uploads</h3>
+                <p class="text-gray-300 mb-4">Upload your lectures and presentations here for students to access.</p>
+                <div class="mb-4">
+                    <label for="lectureTitle" class="form-label">Lecture Title</label>
+                    <input type="text" id="lectureTitle" class="form-input"
+                        placeholder="e.g., Advanced Aerodynamics Lecture 1">
+                </div>
+                <div class="mb-4">
+                    <label for="lectureLink" class="form-label">YouTube/Video Link</label>
+                    <input type="url" id="lectureLink" class="form-input"
+                        placeholder="e.g., https://www.youtube.com/watch?v=xyz123">
+                </div>
+                <div class="mb-4">
+                    <label for="lectureDescription" class="form-label">Description</label>
+                    <textarea id="lectureDescription" class="form-input h-24"
+                        placeholder="Brief summary of the lecture..."></textarea>
+                </div>
+                <button class="btn-primary">Upload Lecture</button>
+
+                <h3 class="text-2xl text-blue-300 font-semibold mb-4 mt-8">Recent Lectures</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <iframe class="w-full aspect-video rounded-md mb-3"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0"
+                            allowfullscreen></iframe>
+                        <h4 class="text-xl font-semibold text-yellow-300">Introduction to Quantum Computing</h4>
+                        <p class="text-gray-400 text-sm">Speaker: Dr. S. Verma | Date: May 15, 2025</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <iframe class="w-full aspect-video rounded-md mb-3"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0"
+                            allowfullscreen></iframe>
+                        <h4 class="text-xl font-semibold text-yellow-300">Modern Aircraft Design Principles</h4>
+                        <p class="text-gray-400 text-sm">Speaker: Prof. A. Reddy | Date: April 28, 2025</p>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl text-blue-300 font-semibold mb-4 mt-8">Event Recordings & Workshops</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <iframe class="w-full aspect-video rounded-md mb-3"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0"
+                            allowfullscreen></iframe>
+                        <h4 class="text-xl font-semibold text-yellow-300">Annual Aerospace Symposium 2024 Highlights
+                        </h4>
+                        <p class="text-gray-400 text-sm">Date: Nov 20, 2024</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <iframe class="w-full aspect-video rounded-md mb-3"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0"
+                            allowfullscreen></iframe>
+                        <h4 class="text-xl font-semibold text-yellow-300">Drone Building Workshop: From Kit to Flight
+                        </h4>
+                        <p class="text-gray-400 text-sm">Date: Feb 10, 2025</p>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl text-blue-300 font-semibold mb-4 mt-8">Club Showcases</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <iframe class="w-full aspect-video rounded-md mb-3"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0"
+                            allowfullscreen></iframe>
+                        <h4 class="text-xl font-semibold text-yellow-300">Aeromodelling Club: Best Designs of 2024</h4>
+                        <p class="text-gray-400 text-sm">Featuring student projects</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <iframe class="w-full aspect-video rounded-md mb-3"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0"
+                            allowfullscreen></iframe>
+                        <h4 class="text-xl font-semibold text-yellow-300">UAV Club: Autonomous Navigation Demo</h4>
+                        <p class="text-gray-400 text-sm">Live demo highlights</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="aeromodelling-club" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Aeromodelling Club</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">The Aeromodelling Club is where passion for flight takes concrete shape.
+                    Members design, build, and fly various types of model aircraft, from gliders to powered RC planes.
+                    We participate in national competitions and foster hands-on engineering skills.</p>
+                <button class="btn-secondary text-sm">Join Club</button>
+            </div>
+        </section>
+
+        <section id="uav-club" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">UAV Club</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">The UAV Club focuses on the design, development, and application of
+                    Unmanned Aerial Vehicles. Members work on projects involving autonomous navigation, payload
+                    integration, and advanced drone technologies. We explore the future of aerial robotics.</p>
+                <button class="btn-secondary text-sm">Join Club</button>
+            </div>
+        </section>
+
+        <section id="propulsion-club" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Propulsion Club</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">The Propulsion Club delves into the fascinating world of aircraft and
+                    spacecraft engines. From jet propulsion to rocket science, members study various propulsion systems,
+                    conduct small-scale experiments, and stay updated with the latest advancements in powerplants.</p>
+                <button class="btn-secondary text-sm">Join Club</button>
+            </div>
+        </section>
+
+        <section id="aerodynamics-research-group" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Aerodynamics Research Group</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">Conducts cutting-edge research in high-speed aerodynamics, flow control,
+                    and novel wing designs for future aircraft and aerospace vehicles.</p>
+                <button class="btn-secondary text-sm">Learn More</button>
+            </div>
+        </section>
+        <section id="avionics-flight-control-group" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Avionics & Flight Control Systems Group</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">Focuses on the integration of electronic systems, navigation,
+                    communication, and robust flight control laws for safe and efficient aircraft operation.</p>
+                <button class="btn-secondary text-sm">Learn More</button>
+            </div>
+        </section>
+        <section id="aircraft-maintenance-group" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Aircraft Maintenance & Reliability Group</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">Researches advanced maintenance techniques, predictive analytics for
+                    component failure, and reliability engineering to ensure aircraft safety and longevity.</p>
+                <button class="btn-secondary text-sm">Learn More</button>
+            </div>
+        </section>
+        <section id="aircraft-accident-investigation-group" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Aircraft Accident Investigation Group</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">This group specializes in the principles and methodologies of aircraft
+                    accident investigation. Members study forensic analysis, human factors, systems failures, and
+                    regulatory compliance to understand and prevent aviation mishaps, drawing inspiration from agencies
+                    like NTSB and AAIB.</p>
+                <button class="btn-secondary text-sm">Learn More</button>
+            </div>
+        </section>
+        <section id="advanced-computing-group" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Advanced Computing Group</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">Explores cutting-edge computational methods and technologies applicable to
+                    aerospace challenges, including high-performance computing, big data analytics, and artificial
+                    intelligence for complex simulations and decision-making.</p>
+                <button class="btn-secondary text-sm">Learn More</button>
+            </div>
+        </section>
+        <section id="quantum-computing-group" class="content-section">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Quantum Computing Group</h2>
+            <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                <p class="text-gray-400 mb-4">Focuses on the theoretical and practical applications of quantum computing
+                    in aerospace, including quantum-enhanced optimization for aircraft design, secure quantum
+                    communication for space missions, and quantum simulations of materials.</p>
+                <button class="btn-secondary text-sm">Learn More</button>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" id="close-login-modal">&times;</button>
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6 text-center">User Login</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="login-id-email" class="form-label">Email or ID</label>
+                    <input type="text" id="login-id-email" class="form-input"
+                        placeholder="Your Email or USN/Employee ID/Researcher ID" required>
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" id="login-password" class="form-input" placeholder="Your Password" required>
+                </div>
+                <button type="submit" class="btn-primary w-full">Login</button>
+            </form>
+            <p class="text-center text-gray-400 mt-4">Don't have an account? <a href="#" id="switch-to-register"
+                    class="text-blue-400 hover:underline">Register here</a></p>
+        </div>
+    </div>
+
+    <div id="registration-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" id="close-registration-modal">&times;</button>
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6 text-center">User Registration</h2>
+            <form id="registration-form">
+                <div class="mb-4">
+                    <label for="reg-role" class="form-label">Register As</label>
+                    <select id="reg-role" class="form-input">
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="researcher">Researcher</option>
+                        <option value="guest">Guest</option>
+                        <option value="member-rarf">RARF Member</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-name" class="form-label">Full Name</label>
+                    <input type="text" id="reg-name" class="form-input" placeholder="Your Full Name" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-id" class="form-label" id="reg-id-label">USN</label>
+                    <input type="text" id="reg-id" class="form-input" placeholder="Your USN" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-dob" class="form-label">Date of Birth (DD/MM/YYYY)</label>
+                    <div class="datepicker-container">
+                        <input type="text" id="reg-dob" class="form-input" placeholder="DD/MM/YYYY" readonly required>
+                        <div id="datepicker" class="datepicker"></div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-course-type" class="form-label">Course Type</label>
+                    <select id="reg-course-type" class="form-input">
+                        <option value="">Select Course Type</option>
+                        <option value="ug-be-btech">UG: BE/B.Tech</option>
+                        <option value="pg-me-mtech">PG: ME/M.Tech</option>
+                        <option value="pg-mba">PG: MBA</option>
+                        <option value="pg-mca">PG: MCA</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-department" class="form-label">Department</label>
+                    <input type="text" id="reg-department" class="form-input" placeholder="Your Department" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-year" class="form-label">Year</label>
+                    <input type="number" id="reg-year" class="form-input" placeholder="e.g., 2025" min="1950"
+                        max="2050">
+                </div>
+                <div class="mb-4">
+                    <label for="reg-semester" class="form-label">Semester</label>
+                    <input type="number" id="reg-semester" class="form-input" placeholder="e.g., 5" min="1" max="10">
+                </div>
+                <div class="mb-4">
+                    <label for="reg-mobile" class="form-label">Mobile Number</label>
+                    <input type="tel" id="reg-mobile" class="form-input" placeholder="e.g., +919876543210" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-email" class="form-label">Email</label>
+                    <input type="email" id="reg-email" class="form-input" placeholder="your.email@example.com" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-aadhar" class="form-label">Aadhar Number</label>
+                    <input type="text" id="reg-aadhar" class="form-input" placeholder="XXXX XXXX XXXX"
+                        pattern="[0-9]{12}" title="Aadhar number must be 12 digits" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-why-forum" class="form-label">Why are you interested in this Forum? (Min 50, Max 500
+                        words)</label>
+                    <textarea id="reg-why-forum" class="form-input h-32" minlength="50" maxlength="500"
+                        placeholder="Share your motivation..." required></textarea>
+                    <p class="text-xs text-gray-400 mt-1"><span id="wordCount">0</span> words</p>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-photo" class="form-label">Upload Photo (Max 2MB)</label>
+                    <input type="file" id="reg-photo" class="form-input" accept="image/*" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-signature" class="form-label">Upload Signature (Max 2MB)</label>
+                    <input type="file" id="reg-signature" class="form-input" accept="image/*" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-thumb-impression" class="form-label">Upload Thumb Impression (Max 2MB)</label>
+                    <input type="file" id="reg-thumb-impression" class="form-input" accept="image/*" required>
+                </div>
+                <div class="mb-6">
+                    <label for="reg-aadhar-doc" class="form-label">Upload Aadhar Document (Max 10MB, PDF, JPG, JPEG,
+                        PNG)</label>
+                    <input type="file" id="reg-aadhar-doc" class="form-input" accept=".pdf,.jpg,.jpeg,.png" required>
+                </div>
+                <div class="mb-6">
+                    <label for="reg-password" class="form-label">Password</label>
+                    <input type="password" id="reg-password" class="form-input" placeholder="Choose a strong password"
+                        required>
+                </div>
+                <button type="submit" class="btn-primary w-full">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="registration-preview-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" id="close-preview-modal">&times;</button>
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6 text-center">Review Your Application</h2>
+            <div id="preview-details" class="bg-gray-800 p-6 rounded-xl shadow-lg text-gray-300 space-y-2">
+            </div>
+            <div class="mt-6 flex justify-between gap-4">
+                <button id="edit-application-btn" class="btn-secondary w-1/2">Edit Application</button>
+                <button id="print-application-btn" class="btn-primary w-1/2">Print Application</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="thank-you-modal" class="modal">
+        <div class="modal-content text-center">
+            <h2 class="text-3xl font-bold text-yellow-300 mb-6">Thank You for Your Application!</h2>
+            <p class="text-gray-300 text-lg mb-4">Dear <span id="thankYouName"></span> (<span id="thankYouUsn"></span>),
+            </p>
+            <p class="text-gray-300 mb-6">Your application for RARF membership has been successfully submitted. We
+                appreciate your interest and will review your details shortly.</p>
+            <button class="btn-primary" id="close-thank-you-modal">Close</button>
+        </div>
+    </div>
+
+    <div id="chatSection" class="rounded-tl-xl overflow-hidden flex flex-col fixed bottom-0 right-0 z-50 shadow-2xl">
+        <div id="chatHeader" class="flex justify-between items-center cursor-pointer">
+            <h3 class="text-lg font-semibold"><i class="fas fa-comments mr-2"></i>RARF Group Chat</h3>
+            <button id="chatToggleBtn" class="text-white text-xl">
+                <i id="chatToggleIcon" class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+        <div id="chatBody" class="flex-grow flex flex-col hidden">
+            <div id="chatMessages" class="flex-grow p-4 overflow-y-auto bg-gray-700">
+                <div class="message-bubble received">
+                    <p class="text-xs text-gray-300 mb-1">Admin Bot</p>Hello everyone! Welcome to the RARF Group Chat.
+                </div>
+                <div class="message-bubble received">
+                    <p class="text-xs text-gray-300 mb-1">Admin Bot</p>Feel free to discuss projects, events, and
+                    aerospace news!
+                </div>
+            </div>
+            <div id="chatInputContainer" class="p-4 bg-gray-800 border-t border-gray-700 flex items-center">
+                <input type="text" id="chatInput" class="form-input flex-grow mr-2" placeholder="Type your message...">
+                <button id="chatSendBtn" class="btn-primary p-2 text-white"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12 shadow-inner">
+        <div class="container text-center">
+            <p class="mb-4">Inspired by the excellence of: ISRO, NASA, HAL, DRDO, NAL, BEL, BDL and other leading
+                aerospace organizations and educational institutions worldwide.</p>
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-400 hover:text-yellow-400 text-2xl"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-yellow-400 text-2xl"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-yellow-400 text-2xl"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-gray-400 hover:text-yellow-400 text-2xl"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="text-sm">&copy; 2025 Ramaiah Institute of Technology. All Rights Reserved.</p>
+            <p class="text-sm mt-1">Designed by DHARUN M</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[data-target]').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.dataset.target;
+                const targetSection = document.getElementById(targetId);
+
+                // Hide all content sections first
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Show the target section
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+
+                // Close mobile menu if open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Login/Registration Modals
+        const loginModal = document.getElementById('login-modal');
+        const registrationModal = document.getElementById('registration-modal');
+        const rarfMemberLoginBtn = document.getElementById('open-member-login-modal');
+        const rarfMemberRegisterBtn = document.getElementById('open-member-registration-modal');
+        const rarfMemberLoginMobileBtn = document.getElementById('open-member-login-mobile');
+        const rarfMemberRegisterMobileBtn = document.getElementById('open-member-registration-mobile');
+        const closeLoginModalBtn = document.getElementById('close-login-modal');
+        const closeRegistrationModalBtn = document.getElementById('close-registration-modal');
+        const switchToRegisterLink = document.getElementById('switch-to-register');
+
+        function openModal(modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+        }
+
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore background scroll
+        }
+
+        rarfMemberLoginBtn.addEventListener('click', () => openModal(loginModal));
+        rarfMemberRegisterBtn.addEventListener('click', () => openModal(registrationModal));
+        rarfMemberLoginMobileBtn.addEventListener('click', () => openModal(loginModal));
+        rarfMemberRegisterMobileBtn.addEventListener('click', () => openModal(registrationModal));
+
+        closeLoginModalBtn.addEventListener('click', () => closeModal(loginModal));
+        closeRegistrationModalBtn.addEventListener('click', () => closeModal(registrationModal));
+
+        loginModal.addEventListener('click', (e) => { // Close when clicking outside modal-content
+            if (e.target === loginModal) closeModal(loginModal);
+        });
+        registrationModal.addEventListener('click', (e) => { // Close when clicking outside modal-content
+            if (e.target === registrationModal) closeModal(registrationModal);
+        });
+
+        switchToRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal(loginModal);
+            openModal(registrationModal);
+        });
+
+        // Dynamic ID field for Registration
+        const regRoleSelect = document.getElementById('reg-role');
+        const regIdLabel = document.getElementById('reg-id-label');
+        const regIdInput = document.getElementById('reg-id');
+        const regOrgCompanyDiv = document.getElementById('reg-org-company-div'); // assuming this exists from previous iterations
+
+        regRoleSelect.addEventListener('change', function () {
+            const selectedRole = this.value;
+            let labelText = 'ID';
+            let placeholderText = 'Your ID';
+            // if (regOrgCompanyDiv) regOrgCompanyDiv.classList.add('hidden'); // Hide by default
+
+            if (selectedRole === 'student') {
+                labelText = 'USN';
+                placeholderText = 'Your USN';
+            } else if (selectedRole === 'faculty') {
+                labelText = 'Employee ID';
+                placeholderText = 'Your Employee ID';
+            } else if (selectedRole === 'researcher') {
+                labelText = 'Researcher ID';
+                placeholderText = 'Your Researcher ID';
+            } else if (selectedRole === 'guest') {
+                labelText = 'Organization/Company Name';
+                placeholderText = 'Your Organization/Company Name';
+                // if (regOrgCompanyDiv) regOrgCompanyDiv.classList.remove('hidden'); // Show for guest
+            } else if (selectedRole === 'member-rarf') {
+                labelText = 'USN'; // RARF members are students, so USN applies
+                placeholderText = 'Your USN';
+            }
+            regIdLabel.textContent = labelText;
+            regIdInput.placeholder = placeholderText;
+            regIdInput.required = (selectedRole !== 'guest'); // Guest doesn't need an ID
+        });
+
+
+        // Mock Login functionality
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const loginIdEmail = document.getElementById('login-id-email').value;
+            const loginPassword = document.getElementById('login-password').value;
+
+            // Simple mock authentication (hardcoded password)
+            if (loginPassword === 'password123') { // Example password
+                alert('Login Successful! Redirecting to dashboard...');
+                closeModal(loginModal);
+
+                // Simulate populating dashboard based on role or mock data
+                document.getElementById('home-section').classList.remove('active'); // Hide home
+                document.getElementById('member-dashboard').classList.add('active'); // Show member dashboard
+
+                const dashboardMemberName = document.getElementById('dashboardMemberName');
+                const memberDashboardName = document.getElementById('memberDashboardName');
+                const memberDashboardUsn = document.getElementById('memberDashboardUsn');
+                const memberDashboardMobile = document.getElementById('memberDashboardMobile');
+                const memberDashboardPosition = document.getElementById('memberDashboardPosition');
+                const memberUserId = document.getElementById('memberUserId');
+
+                memberUserId.textContent = 'RARF-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                memberDashboardName.textContent = 'John Doe'; // Replace with actual user name
+                dashboardMemberName.textContent = 'John Doe';
+                memberDashboardUsn.textContent = '1MS21AE001'; // Replace with actual USN
+                memberDashboardMobile.textContent = '+91 99887 76655';
+                memberDashboardPosition.textContent = 'Team Leader (Propulsion)'; // Example position
+
+            } else {
+                alert('Invalid Email/ID or Password. Please try again.');
+            }
+        });
+
+        // Chat Widget functionality
+        const chatSection = document.getElementById('chatSection');
+        const chatToggleBtn = document.getElementById('chatToggleBtn');
+        const chatToggleIcon = document.getElementById('chatToggleIcon');
+        const chatBody = document.getElementById('chatBody');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+
+        chatToggleBtn.addEventListener('click', () => {
+            chatBody.classList.toggle('hidden');
+            chatToggleIcon.classList.toggle('fa-chevron-down');
+            chatToggleIcon.classList.toggle('fa-chevron-up');
+            if (!chatBody.classList.contains('hidden')) {
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom when opening
+            }
+        });
+
+        chatSendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text === '') return;
+
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('message-bubble', 'sent');
+            messageBubble.innerHTML = `<p class="text-xs text-gray-300 mb-1">You</p>${text}`;
+            chatMessages.appendChild(messageBubble);
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto scroll to bottom
+
+            // Simulate a reply after a short delay
+            setTimeout(() => {
+                receiveMessage("Okay, got it! Thanks for sharing.");
+            }, 1500);
+        }
+
+        function receiveMessage(text, sender = "Admin Bot") {
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('message-bubble', 'received');
+            messageBubble.innerHTML = `<p class="text-xs text-gray-300 mb-1">${sender}</p>${text}`;
+            chatMessages.appendChild(messageBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Dummy search for notes download (client-side only)
+        const searchNotesInput = document.getElementById('searchNotes');
+        if (searchNotesInput) {
+            searchNotesInput.addEventListener('keyup', function () {
+                const filter = this.value.toLowerCase();
+                const notesItems = document.querySelectorAll('#notesList > div');
+                notesItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Library Filter Logic
+        const libraryFilterButtons = document.querySelectorAll('.library-filter-btn');
+        const libraryContentTypeButtons = document.querySelectorAll('.library-content-type-btn');
+        const libraryItems = document.querySelectorAll('#libraryContent .library-item');
+
+        let activeFilterType = 'all';
+        let activeContentType = null; // Can be 'journals', 'books', 'notes', etc.
+
+        function filterLibraryContent() {
+            libraryItems.forEach(item => {
+                const isTypeMatch = (activeFilterType === 'all' || item.classList.contains(activeFilterType));
+                const isContentMatch = (activeContentType === null || item.classList.contains(activeContentType));
+
+                if (isTypeMatch && isContentMatch) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        libraryFilterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                libraryFilterButtons.forEach(btn => btn.classList.remove('bg-yellow-600', 'text-gray-900'));
+                this.classList.add('bg-yellow-600', 'text-gray-900');
+                activeFilterType = this.dataset.filterType;
+                filterLibraryContent();
+            });
+        });
+
+        libraryContentTypeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                libraryContentTypeButtons.forEach(btn => btn.classList.remove('bg-yellow-600', 'text-gray-900'));
+                this.classList.add('bg-yellow-600', 'text-gray-900');
+                activeContentType = this.dataset.contentType;
+                filterLibraryContent();
+            });
+        });
+
+        // Initialize library filters
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate click on 'All' category button
+            const allFilterButton = document.querySelector('.library-filter-btn[data-filter-type="all"]');
+            if (allFilterButton) {
+                allFilterButton.click();
+            }
+            // No initial content type filter unless specifically set
+            filterLibraryContent();
+        });
+
+
+        // Member Registration Form Logic
+        const registrationForm = document.getElementById('registration-form');
+        const regWhyForum = document.getElementById('reg-why-forum');
+        const wordCountSpan = document.getElementById('wordCount');
+        const regPreviewModal = document.getElementById('registration-preview-modal');
+        const previewDetails = document.getElementById('preview-details');
+        const closePreviewModalBtn = document.getElementById('close-preview-modal');
+        const editApplicationBtn = document.getElementById('edit-application-btn');
+        const printApplicationBtn = document.getElementById('print-application-btn');
+        const thankYouModal = document.getElementById('thank-you-modal');
+        const thankYouNameSpan = document.getElementById('thankYouName');
+        const thankYouUsnSpan = document.getElementById('thankYouUsn');
+        const closeThankYouModalBtn = document.getElementById('close-thank-you-modal');
+
+        regWhyForum.addEventListener('input', function () {
+            const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+            wordCountSpan.textContent = words.length;
+        });
+
+        registrationForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Basic client-side validation for word count
+            const words = regWhyForum.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            if (words < 50 || words > 500) {
+                alert('Please ensure "Why this Forum" is between 50 and 500 words.');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                name: document.getElementById('reg-name').value,
+                usn: document.getElementById('reg-id').value, // Renamed to USN for RARF member
+                dob: document.getElementById('reg-dob').value,
+                courseType: document.getElementById('reg-course-type').value,
+                department: document.getElementById('reg-department').value,
+                year: document.getElementById('reg-year').value,
+                semester: document.getElementById('reg-semester').value,
+                mobile: document.getElementById('reg-mobile').value,
+                email: document.getElementById('reg-email').value,
+                aadhar: document.getElementById('reg-aadhar').value,
+                whyForum: document.getElementById('reg-why-forum').value,
+                // File inputs' values are FileList objects, not directly readable here for preview
+                photo: document.getElementById('reg-photo').files[0] ? document.getElementById('reg-photo').files[0].name : 'Not uploaded',
+                signature: document.getElementById('reg-signature').files[0] ? document.getElementById('reg-signature').files[0].name : 'Not uploaded',
+                thumbImpression: document.getElementById('reg-thumb-impression').files[0] ? document.getElementById('reg-thumb-impression').files[0].name : 'Not uploaded',
+                aadharDoc: document.getElementById('reg-aadhar-doc').files[0] ? document.getElementById('reg-aadhar-doc').files[0].name : 'Not uploaded',
+            };
+
+            // Populate preview modal
+            previewDetails.innerHTML = `
+                <p><strong>Name:</strong> ${formData.name}</p>
+                <p><strong>USN:</strong> ${formData.usn}</p>
+                <p><strong>Date of Birth:</strong> ${formData.dob}</p>
+                <p><strong>Course Type:</strong> ${formData.courseType}</p>
+                <p><strong>Department:</strong> ${formData.department}</p>
+                <p><strong>Year:</strong> ${formData.year}</p>
+                <p><strong>Semester:</strong> ${formData.semester}</p>
+                <p><strong>Mobile Number:</strong> ${formData.mobile}</p>
+                <p><strong>Email:</strong> ${formData.email}</p>
+                <p><strong>Aadhar Number:</strong> ${formData.aadhar}</p>
+                <p><strong>Why this Forum:</strong> ${formData.whyForum}</p>
+                <p><strong>Photo:</strong> ${formData.photo}</p>
+                <p><strong>Signature:</strong> ${formData.signature}</p>
+                <p><strong>Thumb Impression:</strong> ${formData.thumbImpression}</p>
+                <p><strong>Aadhar Document:</strong> ${formData.aadharDoc}</p>
+            `;
+
+            closeModal(registrationModal);
+            openModal(regPreviewModal);
+        });
+
+        closePreviewModalBtn.addEventListener('click', () => closeModal(regPreviewModal));
+        editApplicationBtn.addEventListener('click', () => {
+            closeModal(regPreviewModal);
+            openModal(registrationModal);
+        });
+
+        printApplicationBtn.addEventListener('click', () => {
+            // In a real application, this would send data to a backend to generate a printable PDF.
+            // For this demo, we'll simulate a print and show a thank you.
+            const name = document.getElementById('reg-name').value;
+            const usn = document.getElementById('reg-id').value;
+
+            thankYouNameSpan.textContent = name;
+            thankYouUsnSpan.textContent = usn;
+
+            closeModal(regPreviewModal);
+            openModal(thankYouModal);
+            console.log("Simulating print application for:", name, usn);
+        });
+
+        closeThankYouModalBtn.addEventListener('click', () => closeModal(thankYouModal));
+
+
+        // Datepicker Logic
+        const datepickerInput = document.getElementById('reg-dob');
+        const datepicker = document.getElementById('datepicker');
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        // Populate year dropdown (simplified for example, would ideally be generated)
+        function generateYears() {
+            let years = '<select id="datepicker-year-select" class="form-input text-sm w-auto mr-2">';
+            for (let i = 1950; i <= 2050; i++) {
+                years += `<option value="${i}" ${i === currentYear ? 'selected' : ''}>${i}</option>`;
+            }
+            years += '</select>';
+            return years;
+        }
+
+        // Populate month dropdown (simplified)
+        function generateMonths() {
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let months = '<select id="datepicker-month-select" class="form-input text-sm w-auto">';
+            monthNames.forEach((month, index) => {
+                months += `<option value="${index}" ${index === currentMonth ? 'selected' : ''}>${month}</option>`;
+            });
+            months += '</select>';
+            return months;
+        }
+
+        function renderDatepicker(month, year) {
+            const firstDay = new Date(year, month, 1);
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const startDay = firstDay.getDay(); // 0 for Sunday, 1 for Monday
+
+            let daysHtml = '<div class="datepicker-header flex justify-between items-center mb-2"><button id="prev-month">&laquo;</button><span id="current-month-year" class="font-semibold text-lg">' + firstDay.toLocaleString('default', { month: 'long', year: 'numeric' }) + '</span><button id="next-month">&raquo;</button></div>';
+
+            daysHtml += '<div class="flex justify-between text-xs text-gray-400 mb-1"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>';
+
+            daysHtml += '<div class="datepicker-days-grid">';
+            for (let i = 0; i < startDay; i++) {
+                daysHtml += '<div class="datepicker-day disabled"></div>'; // Empty cells for days before the 1st
+            }
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                daysHtml += `<div class="datepicker-day" data-day="${i}">${i}</div>`;
+            }
+            daysHtml += '</div>';
+
+            datepicker.innerHTML = daysHtml;
+
+            // Add event listeners for navigation
+            document.getElementById('prev-month').onclick = () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderDatepicker(currentMonth, currentYear);
+            };
+            document.getElementById('next-month').onclick = () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderDatepicker(currentMonth, currentYear);
+            };
+
+            document.querySelectorAll('.datepicker-day:not(.disabled)').forEach(dayEl => {
+                dayEl.addEventListener('click', function () {
+                    const selectedDay = this.dataset.day;
+                    const selectedDate = new Date(currentYear, currentMonth, selectedDay);
+                    datepickerInput.value = selectedDate.toLocaleDateString('en-GB').replace(/\//g, '/'); // DD/MM/YYYY
+                    datepicker.classList.remove('active');
+                });
+            });
+        }
+
+        datepickerInput.addEventListener('focus', () => {
+            renderDatepicker(currentMonth, currentYear);
+            datepicker.classList.add('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!datepicker.contains(e.target) && e.target !== datepickerInput) {
+                datepicker.classList.remove('active');
+            }
+        });
+
+
+        // Auto-scroll chat to bottom on load (if not hidden)
+        window.addEventListener('load', () => {
+            if (!chatBody.classList.contains('hidden')) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+
+        // Hide home and show dashboard if user is 'logged in' on refresh (mock session)
+        window.addEventListener('load', () => {
+            // In a real app, check localStorage or a cookie for session
+            // For this mock, assume loggedInUser persists if set previously
+            // if (loggedInUser) { // This variable is not defined in this scope. Keeping it commented for now.
+            //     updateDashboard(loggedInUser.name, loggedInUser.email, loggedInUser.id || loggedInUser.organization, loggedInUser.role, loggedInUser.organization);
+            //     dashboardSection.style.display = 'block';
+            //     dashboardLink.classList.remove('hidden');
+            //     document.getElementById('home-section').style.display = 'none';
+            // }
+        });
+
+    </script>
+</body>
+
+</html>

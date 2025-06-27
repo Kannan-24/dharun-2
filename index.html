@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DM Space Simulator - Dharun M</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            background: none;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #bgImage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        video#bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100vw;
+            min-height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            display: none;
+            /* initially hidden */
+            filter: brightness(0.5);
+        }
+
+        header {
+            text-align: center;
+            background: rgba(26, 127, 255, 0.9);
+            padding: 20px 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            letter-spacing: 1.2px;
+            box-shadow: 0 2px 10px rgba(26, 127, 255, 0.4);
+        }
+
+        header img {
+            height: 48px;
+            vertical-align: middle;
+            margin-right: 16px;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #5bbcff;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .sim-card {
+            background: rgba(34, 48, 74, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: #fff;
+            text-decoration: none;
+            width: 240px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .sim-card:hover {
+            background: rgba(90, 188, 255, 0.9);
+            transform: scale(1.05);
+            color: #000;
+        }
+
+        footer {
+            background: #1a1f2d;
+            text-align: center;
+            padding: 16px;
+            font-size: 0.9rem;
+            color: #ccc;
+            box-shadow: 0 -2px 12px rgba(26, 127, 255, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .sim-card {
+                width: 100%;
+            }
+
+            header {
+                font-size: 1.2rem;
+                padding: 14px 10px;
+            }
+
+            header img {
+                height: 36px;
+                margin-right: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Image displayed first for 5 seconds -->
+    <img src="images/fallback.jpg" id="bgImage" alt="Fallback Background" />
+
+    <!-- Hidden initially -->
+    <video autoplay muted loop id="bgVideo">
+        <source src="video/video.mp4" type="video/mp4">
+    </video>
+
+    <div class="page-wrapper">
+        <header>
+            <img src="images/logo.png" alt="MSRIT Logo">
+            M S RAMAIAH INSTITUTE OF TECHNOLOGY
+        </header>
+
+        <div class="main-container">
+            <h2>
+                Department of Aerospace Engineering<br />
+                RAMAIAH AEROSPACE AND RESEARCH FORUM
+            </h2>
+            <div class="card-container">
+                <a href="index1.html" class="sim-card">RAMAIAH AEROSPACE AND RESEARCH FORUM - 1</a>
+                <a href="index2.html" class="sim-card">RAMAIAH AEROSPACE AND RESEARCH FORUM - 2</a>
+                <a href="index3.html" class="sim-card">RAMAIAH AEROSPACE AND RESEARCH FORUM - 3</a>
+                <a href="index4.html" class="sim-card">RAMAIAH AEROSPACE AND RESEARCH FORUM - 4</a>
+                <a href="index5.html" class="sim-card">RAMAIAH AEROSPACE AND RESEARCH FORUM - 5</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Designed by Dharun M<br />
+        Department of Aerospace Engineering
+    </footer>
+
+    <script>
+        // Show video after 5 seconds, hide the fallback image
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.getElementById("bgImage").style.display = "none";
+                document.getElementById("bgVideo").style.display = "block";
+            }, 5000);
+        });
+    </script>
+</body>
+
+</html>
